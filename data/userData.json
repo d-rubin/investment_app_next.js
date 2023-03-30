@@ -1,0 +1,10 @@
+{
+  "tobi": {
+      "ids": ["bitcoin", "ethereum", "solana", "tether"],
+      "comments": {}
+  },
+  "dani": {
+    "ids": ["bitcoin", "ethereum", "solana", "tether"],
+    "comments": {}
+  }
+}
