@@ -3,31 +3,36 @@
 import React, { useEffect, useState } from "react";
 import { ChartData } from "chart.js";
 import Link from "next/link";
+import Image from "next/image";
 import close from "../img/close.png";
 import { CoinChart } from "./Chart";
-import { CoinData } from "../interfaces";
+import { MarketData } from "../interfaces";
 
-const DisplayCoin = ({ id }: string) => {
+interface DisplayCoinProps {
+  id: string;
+}
+
+const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
   const [chartData, setChartData] = useState<{
     prices: number[];
     labels: string[];
   }>();
-  const [marketData, setMarketData] = useState<CoinData>();
+  const [marketData, setMarketData] = useState<MarketData>();
   const currency = "eur";
   const locals = "de-DE";
   const currencyOptions = { style: "currency", currency: `${currency}` };
   const currentPrice =
     marketData &&
     new Intl.NumberFormat(locals, currencyOptions).format(
-      marketData.current_price
+      marketData.market_data.current_price.eur
     );
   const priceChange24hEur =
     marketData &&
     new Intl.NumberFormat(locals, currencyOptions).format(
-      marketData.price_change_24h
+      marketData.market_data.price_change_24h_in_currency.eur
     );
   const priceChange24hPercentage =
-    marketData && marketData.price_change_percentage_24h;
+    marketData && marketData.market_data.price_change_percentage_24h.toFixed(2);
   const data: ChartData<"line"> = {
     labels: chartData ? chartData.labels : [],
     datasets: [
@@ -81,7 +86,7 @@ const DisplayCoin = ({ id }: string) => {
   }, []);
   return marketData && chartData ? (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
-      <img
+      <Image
         src={close}
         className="absolute right-0 top-0 mr-6 mt-6"
         width={32}
@@ -91,8 +96,8 @@ const DisplayCoin = ({ id }: string) => {
       />
       <h2 className="mb-2 flex text-2xl font-bold leading-tight justify-center cursor-default">
         {marketData.name}{" "}
-        <img
-          src={marketData.image}
+        <Image
+          src={marketData.image.small}
           alt={marketData.name}
           width={25}
           height={25}
@@ -112,7 +117,7 @@ const DisplayCoin = ({ id }: string) => {
           </p>
         </span>
       </div>
-      <Link href="/CoinDetails/[name]">
+      <Link href={`/coinDetails/${id}`} className="text-center">
         <button
           type="button"
           className="cursor-pointer mt-2 rounded-lg bg-blue-400 p-2 uppercase

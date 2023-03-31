@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "../../components/Header";
-import { CoinArea } from "@/components/CoinArea";
+import { CoinArea } from "../../components/CoinArea";
 
 const Home = () => {
   const getUserData = async () => {
