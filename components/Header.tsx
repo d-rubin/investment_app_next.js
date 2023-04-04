@@ -59,6 +59,7 @@ const Header = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newResults: { name: string; id: string }[] = [];
     if (e.target.value !== "") {
+      // eslint-disable-next-line array-callback-return
       coins.map((coin) => {
         if (coin.name.toLowerCase().includes(e.target.value)) {
           newResults.push(coin);
@@ -75,7 +76,7 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full h-14 bg-white shadow-lg mb-4 px-4 relative flex justify-between items-center">
+    <header className="w-full h-14 bg-white border-b-2 px-4 relative flex justify-between items-center">
       <h1 className="text-xl">Hey Tobi</h1>
       <div className="w-48 flex border-2 border-cyan-500 rounded-lg h-8 focus:border-cyan-800">
         <input
@@ -87,8 +88,9 @@ const Header = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
         />
       </div>
-      <ul className="w-48 max-h-60 overflow-y-scroll bg-white shadow-xl absolute top-14 right-0 mr-4 z-10 rounded-bl-lg rounded-br-lg scollbar-none">
+      <ul className="w-48 max-h-60 overflow-y-scroll bg-white shadow-xl absolute top-14 right-0 mr-4 z-10 rounded-bl-lg rounded-br-lg scrollbar-none">
         {results.map((coin: { name: string; id: string }) => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
           <li
             key={coin.id}
             className="w-full gap-1 h-fit rounded-md hover:bg-blue-400 hover:text-white p-2 text-primary text-center"

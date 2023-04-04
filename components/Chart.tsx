@@ -11,6 +11,7 @@ import {
   Legend,
   ChartOptions,
   LineController,
+  ChartData,
 } from "chart.js";
 
 ChartJS.register(
@@ -24,7 +25,13 @@ ChartJS.register(
   LineController
 );
 
-function CoinChart(props) {
+function CoinChart(props: {
+  data: ChartData<"line">;
+  // eslint-disable-next-line react/require-default-props
+  xTicksLimit?: number;
+  // eslint-disable-next-line react/require-default-props
+  yTicksLimit?: number;
+}) {
   const { data, xTicksLimit, yTicksLimit } = props;
   const options: ChartOptions<"line"> = {
     responsive: true,

@@ -1,23 +1,20 @@
-"use client";
-
-import React, { FormEvent } from "react";
+import React from "react";
 
 const Page = () => {
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    console.log(event);
-    // const responst = await fetch("uls", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(event),
-    // });
-  };
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   // const responst = await fetch("uls", {
+  //   //   method: "POST",
+  //   //   headers: { "Content-Type": "application/json" },
+  //   //   body: JSON.stringify(event),
+  //   // });
+  // };
   return (
     <div className="w-full min-h-screen flex justify-center">
       <div className="flex flex-col h-fit xs:w-full lg:w-fit mt-36">
         <h2>Log dich ein Tobi</h2>
         <form
           className="flex gap-4 pt-4 flex-col justify-between"
-          onSubmit={(event) => handleSubmit(event)}
+          // onSubmit={(event) => handleSubmit(event)}
         >
           <input name="email" type="email" placeholder="Email eingeben..." />
           <input

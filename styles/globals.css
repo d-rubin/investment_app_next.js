@@ -39,6 +39,19 @@ a {
   }
 }
 
-.scollbar-none::-webkit-scrollbar {
+.scrollbar-none::-webkit-scrollbar {
   display: none;
+}
+
+.carousel {
+  animation: 80s linear 2s infinite normal none running carousel;
+}
+
+@keyframes carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }

@@ -83,7 +83,7 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
   useEffect(() => {
     fetchMarketData();
     fetchChartData();
-  }, []);
+  });
   return marketData && chartData ? (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
       <Image
@@ -117,7 +117,7 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
           </p>
         </span>
       </div>
-      <Link href={`/coinDetails/${id}`} className="text-center">
+      <Link href={`home/coinDetails/${id}`} className="text-center">
         <button
           type="button"
           className="cursor-pointer mt-2 rounded-lg bg-blue-400 p-2 uppercase

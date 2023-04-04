@@ -2,11 +2,7 @@ export interface CoinData {
   id: string;
   symbol: string;
   name: string;
-  image: {
-    thumb: string;
-    small: string;
-    large: string;
-  };
+  image: string;
   current_price: number;
   market_cap: number;
   market_cap_rank: number;
