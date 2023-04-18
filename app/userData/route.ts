@@ -1,15 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import userData from "../../data/userData.json";
+
+export const data = {
+  tobi: {
+    ids: ["bitcoin", "solana", "ethereum", "tether"],
+  },
+  dani: {},
+};
 
 export async function GET() {
-  return NextResponse.json(userData);
+  return NextResponse.json(data);
 }
 
 export async function POST(request: NextRequest) {
+  console.log(data);
   const { body } = request;
-  const newIDs = userData.tobi.ids.push(JSON.stringify(body));
-  fs.writeFileSync("data/userData.json", JSON.stringify(newIDs));
-
-  return NextResponse.json(userData);
+  data.tobi.ids.push(JSON.stringify(body));
+  console.log(data);
 }

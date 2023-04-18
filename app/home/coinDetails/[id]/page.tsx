@@ -1,94 +1,119 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ChartData } from "chart.js";
 import Link from "next/link";
 import Image from "next/image";
 import back from "../../../../img/back.png";
-import { CoinChart } from "../../../../components/Chart";
 import { MarketData } from "../../../../interfaces";
+import { Header } from "../../../../components/Header";
 
-const CoinDetails = ({ params }: { params: { id: string } }) => {
-  const [chartData, setChartData] = useState<{
-    prices: number[];
-    labels: string[];
-  }>();
+const CoinDetails = async ({ params }: { params: { id: string } }) => {
+  // const [chartDataSets, setChartDataSets] = useState<ChartDataset<"line">[]>(
+  //   []
+  // );
   const [marketData, setMarketData] = useState<MarketData>();
-  let days = 1;
-  let interval: string;
+  const ids: string[] = [params.id];
+  // let url: string;
+  // const days = 1;
+  // const labels: string[] = [];
+  // let interval: string;
   const currency = "eur";
   const locals = "de-DE";
   const currencyOptions = { style: "currency", currency: `${currency}` };
-  const allTimeHigh = marketData
-    ? new Intl.NumberFormat(locals, currencyOptions).format(
-        marketData.market_data.ath.eur
-      )
-    : null;
-  const allTimeLow = marketData
-    ? new Intl.NumberFormat(locals, currencyOptions).format(
-        marketData.market_data.atl.eur
-      )
-    : null;
-  const percentage = marketData
-    ? (marketData.market_data.atl.eur / marketData.market_data.ath.eur) * 100
-    : null;
-  const fetchChartData = async () => {
-    let url: string;
-    if (days >= 365) {
-      interval = "daily";
-    }
-    switch (interval) {
-      case "daily":
-        url = `https://api.coingecko.com/api/v3/coins/${params.id}/market_chart?vs_currency=eur&days=${days}&interval=daily`;
-        break;
-      default:
-        url = `https://api.coingecko.com/api/v3/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`;
-        break;
-    }
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        const price: number[] = [];
-        const label: string[] = [];
-        for (let i = 0; i < data.prices.length; i += 1) {
-          price.push(data.prices[i][1]);
-          label.push(new Date(data.prices[i][0]).toLocaleDateString("de-DE"));
-        }
-        setChartData({ prices: price, labels: label });
-      });
-  };
+  const allTimeHigh =
+    marketData &&
+    new Intl.NumberFormat(locals, currencyOptions).format(
+      marketData.market_data.ath.eur
+    );
+  const allTimeLow =
+    marketData &&
+    new Intl.NumberFormat(locals, currencyOptions).format(
+      marketData.market_data.atl.eur
+    );
+  const percentage =
+    marketData &&
+    (marketData.market_data.atl.eur / marketData.market_data.ath.eur) * 100;
+
   const fetchMarketData = async () => {
-    const url = `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
-    const response = await fetch(url);
+    console.log("Fetching market data");
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`
+    );
     const newData = await response.json();
     setMarketData(newData);
   };
-  const data: ChartData<"line"> = {
-    labels: chartData ? chartData.labels : [],
-    datasets: [
-      {
-        data: chartData ? chartData.prices : [],
-        fill: false,
-        borderColor: "#76A9FA",
-        backgroundColor: "#76A9FA",
-        pointHitRadius: 3,
-        pointRadius: 0,
-        hoverBorderWidth: 5,
-      },
-    ],
-  };
-  const handleClick = (nr: number) => {
-    days = nr;
-    fetchChartData();
-  };
+
+  console.log("before useEffect");
   useEffect(() => {
-    fetchChartData();
+    console.log("use Effect");
+    // fetchChartData();
     fetchMarketData();
-  });
+  }, []);
+  // const chartData: ChartData<"line"> = {
+  //   labels,
+  //   datasets: chartDataSets,
+
+  // };
+  // const fetchChartData = () => {
+  //   ids.forEach(async (id) => {
+  //     if (interval === "daily") {
+  //       url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=eur&days=${days}&interval=daily`;
+  //     } else {
+  //       url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=eur&days=${days}`;
+  //     }
+  //
+  //     await fetch(url)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         const prices: number[] = [];
+  //         labels = [];
+  //
+  //         for (let i = 0; i < data.prices.length; i += 1) {
+  //           prices.push(data.prices[i][1]);
+  //           labels.push(
+  //             new Date(data.prices[i][0]).toLocaleDateString("de-DE")
+  //           );
+  //         }
+  //
+  //         setChartDataSets([
+  //           ...chartDataSets,
+  //           ...[
+  //             {
+  //               data: prices,
+  //               label: id,
+  //               fill: false,
+  //               pointBackgroundColor: Math.floor(
+  //                 Math.random() * 16777215
+  //               ).toString(16),
+  //               borderColor: Math.floor(Math.random() * 16777215).toString(16),
+  //               pointHitRadius: 3,
+  //               pointRadius: 0,
+  //               hoverBorderWidth: 5,
+  //             },
+  //           ],
+  //         ]);
+  //       });
+  //   });
+  // };
+  //
+
+  //
+  const handleClick = (nr: number) => {
+    console.log(nr);
+    // days = nr;
+    // setChartDataSets([]);
+    // fetchChartData();
+  };
+  const handleSearchClick = (id: string) => {
+    ids.push(id);
+    // setChartDataSets([]);
+    // fetchChartData();
+  };
+
   return (
     marketData && (
       <>
-        <header className="w-full h-20 bg-white shadow-lg mb-4 px-4 flex justify-between items-center">
+        <Header onClick={() => handleSearchClick}>
           <div className="flex items-center">
             <Image
               src={marketData.image.large}
@@ -101,17 +126,17 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
               <b>{marketData.name}</b>
             </h1>
           </div>
-          <Link href="/home">
-            <Image
-              className="cursor-pointer"
-              src={back}
-              width={32}
-              height={32}
-              alt="Back"
-            />
-          </Link>
-        </header>
-        <div className="px-4">
+        </Header>
+        <Link href="/home">
+          <Image
+            className="cursor-pointer"
+            src={back}
+            width={32}
+            height={32}
+            alt="Back"
+          />
+        </Link>
+        <div className="px-4 ">
           <div className="px-4 flex flex-wrap justify-center">
             <button
               onClick={() => handleClick(1825)}
@@ -171,7 +196,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
             </button>
           </div>
           <div className="h-80">
-            <CoinChart data={data} xTicksLimit={8} />
+            {/* <CoinChart data={chartData} xTicksLimit={8} /> */}
           </div>
           <div className="flex justify-between items-center">
             <p className="text-center">

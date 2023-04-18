@@ -1,25 +1,22 @@
+"use client";
+
 import React from "react";
 import { Header } from "../../components/Header";
 import { CoinArea } from "../../components/CoinArea";
 import { Carousel } from "../../components/Carousel";
 
-const Home = () => {
-  // const getUserData = async () => {
-  //   const res = await fetch("/userData", {
-  //     mode: "no-cors",
-  //     method: "GET",
-  //   });
-  //   const json = await res.json();
-  //   console.log(json);
-  // };
+const HomePage = () => {
+  const handleClick = (id: string) => {
+    console.log(id);
+  };
 
   return (
     <>
-      <Header />
+      <Header onClick={() => handleClick} />
       <Carousel />
       <CoinArea />
     </>
   );
 };
 
-export default Home;
+export default HomePage;
