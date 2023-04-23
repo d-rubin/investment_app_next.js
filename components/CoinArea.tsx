@@ -8,7 +8,7 @@ const CoinArea = () => {
     "solana",
     "binancecoin",
     "arbitrum",
-    "polygon",
+    "matic-network",
     "dogecoin",
     "cardano",
   ];
