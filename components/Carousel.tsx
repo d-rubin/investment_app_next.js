@@ -19,7 +19,7 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="w-full flex items-center flex-row bg-white h-10 block overflow-hidden mb-4 shadow-xl">
+    <div className="w-full flex items-center flex-row bg-white h-10 overflow-hidden mb-4 shadow-xl">
       <ul className="flex gap-10 carousel w-max">
         {coinList &&
           coinList.map((coin: CoinData) => (

@@ -71,18 +71,16 @@ const Search = ({ onClick }: { onClick: (id: string) => void }) => {
     }
   };
   return (
-    <>
-      <div className="w-48 flex border-2 border-cyan-500 rounded-lg h-8 focus:border-cyan-800">
-        <input
-          className="w-full h-full p-2 rounded-lg"
-          placeholder="Suche nach Coins..."
-          onFocus={(e) => {
-            e.preventDefault();
-          }}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
-        />
-      </div>
-      <ul className="w-48 max-h-60 overflow-y-scroll bg-white shadow-xl absolute top-12 right-0 mr-4 z-10 rounded-bl-lg rounded-br-lg scrollbar-none">
+    <div className="w-48 relative flex border-2 border-cyan-500 rounded-lg h-8 focus:border-cyan-800">
+      <input
+        className="w-full h-full p-2 rounded-lg"
+        placeholder="Suche nach Coins..."
+        onFocus={(e) => {
+          e.preventDefault();
+        }}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
+      />
+      <ul className="w-full max-h-60 overflow-y-scroll bg-white shadow-xl absolute top-8 z-10 rounded-bl-lg rounded-br-lg scrollbar-none">
         {results.map((coin: { name: string; id: string }) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
           <li
@@ -94,7 +92,7 @@ const Search = ({ onClick }: { onClick: (id: string) => void }) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

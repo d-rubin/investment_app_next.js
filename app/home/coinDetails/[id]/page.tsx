@@ -95,7 +95,6 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
 
   //
   const handleClick = (nr: number) => {
-    console.log(nr);
     days = nr;
     fetchChartData();
   };
@@ -108,7 +107,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     fetchChartData();
     fetchMarketData();
-  }, []);
+  });
 
   return (
     marketData && (

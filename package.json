@@ -16,14 +16,18 @@
     "@typescript-eslint/parser": "^5.57.0",
     "@walletconnect/core": "^2.6.2",
     "@walletconnect/web3wallet": "^1.5.1",
+    "@web3modal/ethereum": "^2.3.6",
+    "@web3modal/react": "^2.3.6",
     "chart.js": "^4.2.1",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
     "eslint-config-next": "^13.3.0",
+    "ethers": "^5.7.2",
     "next": "^13.3.1-canary.13",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "wagmi": "^0.12.12"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.2.4",
