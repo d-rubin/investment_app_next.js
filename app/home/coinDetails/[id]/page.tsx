@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChartData, ChartDataset } from "chart.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import back from "../../../../img/back.png";
 import { MarketData } from "../../../../interfaces";
 import { Search } from "../../../../components/Search";
@@ -95,7 +97,6 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
   const handleClick = (nr: number) => {
     console.log(nr);
     days = nr;
-    setChartDataSets([]);
     fetchChartData();
   };
   // const handleSearchClick = (id: string) => {
@@ -105,6 +106,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
   // };
 
   useEffect(() => {
+    fetchChartData();
     fetchMarketData();
   }, []);
 
@@ -195,7 +197,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
             </button>
           </div>
           <div className="h-80">
-            <CoinChart data={chartData} xTicksLimit={8} />
+            chartData && <CoinChart data={chartData} xTicksLimit={8} />
           </div>
           <div className="flex justify-between items-center">
             <p className="text-center">
