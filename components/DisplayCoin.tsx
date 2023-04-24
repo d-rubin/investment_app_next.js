@@ -144,7 +144,8 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
   useEffect(() => {
     fetchMarketData();
     fetchChartData();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return marketData && chartData ? (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
       {/* <Image */}

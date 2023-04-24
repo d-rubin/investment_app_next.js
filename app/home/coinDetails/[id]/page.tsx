@@ -17,16 +17,17 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
   const allTimeHigh =
     marketData &&
     new Intl.NumberFormat(locals, currencyOptions).format(
-      marketData.market_data.ath.eur
+      marketData.market_data.high_24h.eur
     );
   const allTimeLow =
     marketData &&
     new Intl.NumberFormat(locals, currencyOptions).format(
-      marketData.market_data.atl.eur
+      marketData.market_data.low_24h.eur
     );
   const percentage =
     marketData &&
-    (marketData.market_data.atl.eur / marketData.market_data.ath.eur) * 100;
+    (marketData.market_data.low_24h.eur / marketData.market_data.high_24h.eur) *
+      100;
 
   const fetchMarketData = async () => {
     const response = await fetch(
@@ -38,7 +39,8 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     fetchMarketData();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     marketData && (
@@ -69,9 +71,9 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
         <div className="px-4 ">
           {marketData && <CoinChart id={params.id} />}
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center px-4">
           <p className="text-center">
-            ATL:
+            24h Low:
             <br />
             {allTimeLow}
           </p>
@@ -84,7 +86,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
           <p className="text-center">
-            ATH:
+            24h High:
             <br />
             {allTimeHigh}
           </p>
