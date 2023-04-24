@@ -132,7 +132,7 @@ function CoinChart({ id }: { id: string }) {
 
   useEffect(() => {
     fetchChartData();
-  });
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-2">
