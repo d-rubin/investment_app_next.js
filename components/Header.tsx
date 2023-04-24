@@ -43,10 +43,6 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
   });
   const ethereumClient = new EthereumClient(wagmiClient, chains);
 
-  const handleClick = (id: string) => {
-    console.log(id);
-  };
-
   return (
     <>
       <header className="w-full h-14 bg-white border-b-2 px-4 relative flex justify-between items-center">
@@ -55,7 +51,7 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
           {children}
         </div>
         <div className="flex justify-between items-center gap-2">
-          <Search onClick={handleClick} />
+          {/* <Search onClick={handleClick} /> */}
           <Web3Button icon="show" label="Connect Wallet" balance="show" />
         </div>
       </header>

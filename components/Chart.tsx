@@ -122,17 +122,16 @@ function CoinChart({ id }: { id: string }) {
 
   const handleClick = (number: number) => {
     setDays(number);
-    fetchChartData();
   };
 
   const handleSearchClick = (coin: string) => {
     setIds([...ids, coin]);
-    fetchChartData();
   };
 
   useEffect(() => {
     fetchChartData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ids, days]);
 
   return (
     <div className="flex flex-col items-center gap-2">
