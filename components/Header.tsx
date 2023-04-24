@@ -20,7 +20,6 @@ import {
   optimism,
   polygon,
 } from "wagmi/chains";
-import { Search } from "./Search";
 
 // eslint-disable-next-line react/require-default-props
 const Header = ({ children }: { children?: React.ReactNode }) => {
