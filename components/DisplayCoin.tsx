@@ -1,12 +1,34 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ChartData } from "chart.js";
+import {
+  ChartData,
+  ChartOptions,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  LineController,
+} from "chart.js";
 import Link from "next/link";
 import Image from "next/image";
-import close from "../img/close.png";
-import { CoinChart } from "./Chart";
+import { Line } from "react-chartjs-2";
 import { MarketData } from "../interfaces";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  LineController
+);
 
 interface DisplayCoinProps {
   id: string;
@@ -47,10 +69,49 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
       },
     ],
   };
-
-  const closeCard = () => {
-    fetch("userData", { body: id, method: "DELETE" });
+  const options: ChartOptions<"line"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    locale: "de",
+    interaction: {
+      intersect: false,
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
+        displayColors: false,
+        mode: "nearest",
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        border: {
+          display: false,
+        },
+        ticks: {
+          source: "auto",
+          autoSkip: true,
+          maxRotation: 0,
+          minRotation: 0,
+          maxTicksLimit: 5,
+        },
+      },
+      y: {
+        position: "right",
+        ticks: {
+          autoSkip: true,
+          source: "auto",
+        },
+      },
+    },
   };
+
   const fetchMarketData = async () => {
     const url = `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
     // const url = "https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false";
@@ -86,14 +147,13 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
   });
   return marketData && chartData ? (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
-      <Image
-        src={close}
-        className="absolute right-0 top-0 mr-6 mt-6"
-        width={32}
-        height={32}
-        onClick={closeCard}
-        alt="Close"
-      />
+      {/* <Image */}
+      {/*  src={close} */}
+      {/*  className="absolute right-0 top-0 mr-6 mt-6" */}
+      {/*  width={32} */}
+      {/*  height={32} */}
+      {/*  alt="Close" */}
+      {/* /> */}
       <h2 className="mb-2 flex text-2xl font-bold leading-tight justify-center cursor-default">
         {marketData.name}{" "}
         <Image
@@ -106,7 +166,7 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
       </h2>
       <div className="flex flex-col">
         <div className="w-full h-40">
-          <CoinChart data={data} yTicksLimit={10} xTicksLimit={4} />
+          <Line data={data} options={options} />
         </div>
         <span className="w-full text-center cursor-default">
           <p>Aktueller Preis:</p>
