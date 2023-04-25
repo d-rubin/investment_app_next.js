@@ -81,7 +81,6 @@ const Search = ({ onClick }: { onClick: (id: string) => void }) => {
         onFocus={(e) => {
           e.preventDefault();
         }}
-        onBlur={() => setResults([])}
         onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
       />
       <ul className="w-full max-h-60 overflow-y-scroll bg-white shadow-xl absolute top-8 z-10 rounded-bl-lg rounded-br-lg scrollbar-none">
