@@ -58,6 +58,7 @@ const Search = ({ onClick }: { onClick: (id: string) => void }) => {
   const [results, setResults] = useState<{ name: string; id: string }[]>([]);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newResults: { name: string; id: string }[] = [];
+
     if (e.target.value !== "") {
       // eslint-disable-next-line array-callback-return
       coins.map((coin) => {
@@ -65,11 +66,13 @@ const Search = ({ onClick }: { onClick: (id: string) => void }) => {
           newResults.push(coin);
         }
       });
+
       setResults(newResults);
     } else {
       setResults([]);
     }
   };
+
   return (
     <div className="w-48 relative flex border-2 border-cyan-500 rounded-lg h-8 focus:border-cyan-800">
       <input
@@ -78,6 +81,7 @@ const Search = ({ onClick }: { onClick: (id: string) => void }) => {
         onFocus={(e) => {
           e.preventDefault();
         }}
+        onBlur={() => setResults([])}
         onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(e)}
       />
       <ul className="w-full max-h-60 overflow-y-scroll bg-white shadow-xl absolute top-8 z-10 rounded-bl-lg rounded-br-lg scrollbar-none">
