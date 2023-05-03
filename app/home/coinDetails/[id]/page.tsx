@@ -29,18 +29,25 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
     (marketData.market_data.low_24h.eur / marketData.market_data.high_24h.eur) *
       100;
 
-  const fetchMarketData = async () => {
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`
-    );
-    const newData = await response.json();
-    setMarketData(newData);
-  };
-
   useEffect(() => {
-    fetchMarketData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const fetchMarketData = async () => {
+      // const url = `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
+      const url = "http://127.0.0.1:8000/coingecko/getMarketData";
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ id: params.id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.json();
+    };
+
+    fetchMarketData().then((newData) => {
+      console.log(newData);
+      setMarketData(newData);
+    });
+  }, [params.id]);
 
   return (
     marketData && (

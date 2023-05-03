@@ -112,40 +112,41 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
     },
   };
 
-  const fetchMarketData = async () => {
-    const url = `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
-    // const url = "https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false";
-    const response = await fetch(url);
-    const dataList = await response.json();
-    setMarketData(dataList);
-  };
-  const fetchChartData = async () => {
-    await fetch(
-      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=1`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        const price: number[] = [];
-        const label: string[] = [];
-        for (let i = 0; i < res.prices.length; i += 1) {
-          if (i % 3 === 0) {
-            price.push(res.prices[i][1]);
-            label.push(
-              new Date(res.prices[i][0]).toLocaleTimeString("de-DE", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            );
-          }
-        }
-        setChartData({ prices: price, labels: label });
-      });
-  };
   useEffect(() => {
-    fetchMarketData();
-    fetchChartData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const fetchMarketData = async () => {
+      const url = `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
+      // const url = "http://127.0.0.1:8000/coingecko/getMarketData";
+      return fetch(url).then((res) => {
+        return res.json();
+      });
+    };
+
+    const fetchChartData = async () => {
+      return fetch(
+        `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=1`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          const price: number[] = [];
+          const label: string[] = [];
+          for (let i = 0; i < res.prices.length; i += 1) {
+            if (i % 3 === 0) {
+              price.push(res.prices[i][1]);
+              label.push(
+                new Date(res.prices[i][0]).toLocaleTimeString("de-DE", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              );
+            }
+          }
+          return { prices: price, labels: label };
+        });
+    };
+
+    fetchMarketData().then((dataList) => setMarketData(dataList));
+    fetchChartData().then((res) => setChartData(res));
+  }, [id]);
   return marketData && chartData ? (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
       {/* <Image */}
