@@ -31,8 +31,8 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const fetchMarketData = async () => {
-      // const url = `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
-      const url = "http://127.0.0.1:8000/coingecko/getMarketData";
+      const url = `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
+      // const url = "http://127.0.0.1:8000/coingecko/getMarketData";
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({ id: params.id }),
