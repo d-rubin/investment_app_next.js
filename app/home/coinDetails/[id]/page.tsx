@@ -44,7 +44,6 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
     };
 
     fetchMarketData().then((newData) => {
-      console.log(newData);
       setMarketData(newData);
     });
   }, [params.id]);
