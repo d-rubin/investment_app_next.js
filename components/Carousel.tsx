@@ -1,22 +1,20 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-
 import { CoinData } from "../interfaces";
 
 const Carousel = () => {
   const [coinList, setCoinList] = useState<CoinData[]>();
-  const getCoins = async () => {
-    const url =
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h&locale=de";
-    const res = await fetch(url).then((response) => response.json());
-    setCoinList(res);
-  };
+  const currency = "eur";
+  const count = 50;
+  const locale = "de";
 
   useEffect(() => {
-    getCoins();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetch(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${count}&page=1&sparkline=true&price_change_percentage=24h&locale=${locale}`
+    ).then(async (res) => {
+      const json = await res.json();
+      setCoinList(json);
+    });
   }, []);
 
   return (

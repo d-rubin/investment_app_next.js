@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { Line } from "react-chartjs-2";
-import { MarketData } from "../interfaces";
+import { CoinData } from "../interfaces";
 
 ChartJS.register(
   CategoryScale,
@@ -30,32 +30,24 @@ ChartJS.register(
   LineController
 );
 
-interface DisplayCoinProps {
-  id: string;
-}
-
-const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
+const DisplayCoin = ({ data }: { data: CoinData }) => {
   const [chartData, setChartData] = useState<{
     prices: number[];
     labels: string[];
   }>();
-  const [marketData, setMarketData] = useState<MarketData>();
   const currency = "eur";
   const locals = "de-DE";
   const currencyOptions = { style: "currency", currency: `${currency}` };
-  const currentPrice =
-    marketData &&
-    new Intl.NumberFormat(locals, currencyOptions).format(
-      marketData.market_data.current_price.eur
-    );
-  const priceChange24hEur =
-    marketData &&
-    new Intl.NumberFormat(locals, currencyOptions).format(
-      marketData.market_data.price_change_24h_in_currency.eur
-    );
+  const currentPrice = new Intl.NumberFormat(locals, currencyOptions).format(
+    data.current_price
+  );
+  const priceChange24hEur = new Intl.NumberFormat(
+    locals,
+    currencyOptions
+  ).format(data.price_change_24h);
   const priceChange24hPercentage =
-    marketData && marketData.market_data.price_change_percentage_24h.toFixed(2);
-  const data: ChartData<"line"> = {
+    data.price_change_percentage_24h_in_currency.toFixed(2);
+  const dataForChart: ChartData<"line"> = {
     labels: chartData ? chartData.labels : [],
     datasets: [
       {
@@ -112,41 +104,33 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
     },
   };
 
-  const fetchMarketData = async () => {
-    const url = `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
-    // const url = "https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false";
-    const response = await fetch(url);
-    const dataList = await response.json();
-    setMarketData(dataList);
-  };
-  const fetchChartData = async () => {
-    await fetch(
-      `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=1`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        const price: number[] = [];
-        const label: string[] = [];
-        for (let i = 0; i < res.prices.length; i += 1) {
-          if (i % 3 === 0) {
-            price.push(res.prices[i][1]);
-            label.push(
-              new Date(res.prices[i][0]).toLocaleTimeString("de-DE", {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            );
-          }
-        }
-        setChartData({ prices: price, labels: label });
-      });
-  };
   useEffect(() => {
-    fetchMarketData();
-    fetchChartData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return marketData && chartData ? (
+    const fetchChartData = async () => {
+      return fetch(
+        `https://api.coingecko.com/api/v3/coins/${data.id}/market_chart?vs_currency=${currency}&days=1`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          const price: number[] = [];
+          const label: string[] = [];
+          for (let i = 0; i < res.prices.length; i += 1) {
+            if (i % 3 === 0) {
+              price.push(res.prices[i][1]);
+              label.push(
+                new Date(res.prices[i][0]).toLocaleTimeString("de-DE", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              );
+            }
+          }
+          return { prices: price, labels: label };
+        });
+    };
+
+    fetchChartData().then((res) => setChartData(res));
+  }, [data.id]);
+  return chartData ? (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
       {/* <Image */}
       {/*  src={close} */}
@@ -156,10 +140,10 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
       {/*  alt="Close" */}
       {/* /> */}
       <h2 className="mb-2 flex text-2xl font-bold leading-tight justify-center cursor-default">
-        {marketData.name}{" "}
+        {data.name}{" "}
         <Image
-          src={marketData.image.small}
-          alt={marketData.name}
+          src={data.image}
+          alt={data.name}
           width={25}
           height={25}
           className="ml-2"
@@ -167,7 +151,7 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
       </h2>
       <div className="flex flex-col">
         <div className="w-full h-40">
-          <Line data={data} options={options} />
+          <Line data={dataForChart} options={options} />
         </div>
         <span className="w-full text-center cursor-default">
           <p>Aktueller Preis:</p>
@@ -178,7 +162,7 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
           </p>
         </span>
       </div>
-      <Link href={`home/coinDetails/${id}`} className="text-center">
+      <Link href={`home/coinDetails/${data.id}`} className="text-center">
         <button
           type="button"
           className="cursor-pointer mt-2 rounded-lg bg-blue-400 p-2 uppercase
@@ -193,7 +177,9 @@ const DisplayCoin: React.FC<DisplayCoinProps> = ({ id }) => {
       </Link>
     </div>
   ) : (
-    <h1>Lade Daten...</h1>
+    <div className="flex justify-center items-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
+      <h1>Lade Daten...</h1>
+    </div>
   );
 };
 
