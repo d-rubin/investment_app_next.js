@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import back from "../../../../img/back.png";
 import { MarketData } from "../../../../interfaces";
 import { CoinChart } from "../../../../components/Chart";
@@ -31,11 +29,10 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const fetchMarketData = async () => {
-      const url = `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false`;
+      const url = `https://api.coingecko.com/api/v3/coins/${params.id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`;
       // const url = "http://127.0.0.1:8000/coingecko/getMarketData";
       const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify({ id: params.id }),
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
@@ -44,6 +41,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
     };
 
     fetchMarketData().then((newData) => {
+      console.log(newData);
       setMarketData(newData);
     });
   }, [params.id]);
@@ -75,7 +73,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
         </div>
 
         <div className="px-4 ">
-          {marketData && <CoinChart id={params.id} />}
+          <CoinChart id={params.id} />
         </div>
         <div className="flex justify-between items-center px-4">
           <p className="text-center">

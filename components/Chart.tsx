@@ -95,13 +95,14 @@ function CoinChart({ id }: { id: string }) {
       let labels: string[] = [];
       const chartDataSets: ChartDataset<"line">[] = [];
       const colors: string[] = [
-        "blue",
+        "#76A5FA",
         "green",
         "red",
         "yellow",
         "purple",
         "black",
         "lightgrey",
+        "blue",
       ];
 
       for (let i = 0; i < ids.length; i += 1) {
@@ -138,7 +139,7 @@ function CoinChart({ id }: { id: string }) {
     fetchChartData().then((result) => setData(result));
   }, [days, ids]);
 
-  return (
+  return data ? (
     <div className="flex flex-col items-center gap-2">
       <Search onClick={(coin) => handleSearchClick(coin)} />
       <div className="flex flex-wrap justify-center w-full gap-2">
@@ -205,7 +206,7 @@ function CoinChart({ id }: { id: string }) {
         )}
       </div>
     </div>
-  );
+  ) : null;
 }
 
 export { CoinChart };
