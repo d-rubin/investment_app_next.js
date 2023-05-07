@@ -42,11 +42,9 @@ const DisplayCoin = ({ data }: { data: CoinData }) => {
       </h2>
       <div className="flex flex-col">
         <h3 className="text-center">Letzte 7 Tage</h3>
-        <div className="w-full h-40">
-          <Sparklines data={data.sparkline_in_7d.price} width={100} height={25}>
-            <SparklinesLine color="#3396FF" />
-          </Sparklines>
-        </div>
+        <Sparklines data={data.sparkline_in_7d.price} width={100} height={25}>
+          <SparklinesLine color="#3396FF" />
+        </Sparklines>
         <span className="w-full text-center cursor-default">
           <p>Aktueller Preis:</p>
           <p>{currentPrice}</p>

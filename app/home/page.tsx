@@ -23,8 +23,10 @@ const HomePage = () => {
   }, []);
 
   return (
-    coinList &&
-    coinList.map((coin) => <DisplayCoin data={coin} key={coin.id} />)
+    <div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-4 gap-4 mb-4">
+      {coinList &&
+        coinList.map((coin) => <DisplayCoin data={coin} key={coin.id} />)}
+    </div>
   );
 };
 
