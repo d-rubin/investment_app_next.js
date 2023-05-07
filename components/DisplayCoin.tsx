@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import Link from "next/link";
 import Image from "next/image";
