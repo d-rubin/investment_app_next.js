@@ -19,8 +19,7 @@ import {
   polygon,
 } from "wagmi/chains";
 
-// eslint-disable-next-line react/require-default-props
-const Header = ({ children }: { children?: React.ReactNode }) => {
+const Header = () => {
   const projectId = "53b0e45dd04a766a00067d2074ee3938";
   const chains = [
     mainnet,
@@ -45,10 +44,9 @@ const Header = ({ children }: { children?: React.ReactNode }) => {
       <header className="w-full h-14 bg-white border-b-2 px-4 relative flex justify-between items-center">
         <div className="flex justify-between gap-2">
           <h1 className="text-xl">Hey Tobi</h1>
-          {children}
+          {/* {children} */}
         </div>
         <div className="flex justify-between items-center gap-2">
-          {/* <Search onClick={handleClick} /> */}
           <Web3Button icon="show" label="Connect Wallet" balance="show" />
         </div>
       </header>

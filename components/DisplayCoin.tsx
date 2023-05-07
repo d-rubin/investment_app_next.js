@@ -1,40 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import {
-  ChartData,
-  ChartOptions,
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  LineController,
-} from "chart.js";
+import React from "react";
+import { Sparklines, SparklinesLine } from "react-sparklines";
 import Link from "next/link";
 import Image from "next/image";
-import { Line } from "react-chartjs-2";
 import { CoinData } from "../interfaces";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  LineController
-);
-
 const DisplayCoin = ({ data }: { data: CoinData }) => {
-  const [chartData, setChartData] = useState<{
-    prices: number[];
-    labels: string[];
-  }>();
   const currency = "eur";
   const locals = "de-DE";
   const currencyOptions = { style: "currency", currency: `${currency}` };
@@ -47,90 +19,8 @@ const DisplayCoin = ({ data }: { data: CoinData }) => {
   ).format(data.price_change_24h);
   const priceChange24hPercentage =
     data.price_change_percentage_24h_in_currency.toFixed(2);
-  const dataForChart: ChartData<"line"> = {
-    labels: chartData ? chartData.labels : [],
-    datasets: [
-      {
-        data: chartData ? chartData.prices : [],
-        fill: false,
-        borderColor: "#76A9FA",
-        backgroundColor: "#76A9FA",
-        pointHitRadius: 3,
-        pointRadius: 0,
-        hoverBorderWidth: 5,
-      },
-    ],
-  };
-  const options: ChartOptions<"line"> = {
-    responsive: true,
-    maintainAspectRatio: false,
-    locale: "de",
-    interaction: {
-      intersect: false,
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: true,
-        displayColors: false,
-        mode: "nearest",
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-        border: {
-          display: false,
-        },
-        ticks: {
-          source: "auto",
-          autoSkip: true,
-          maxRotation: 0,
-          minRotation: 0,
-          maxTicksLimit: 5,
-        },
-      },
-      y: {
-        position: "right",
-        ticks: {
-          autoSkip: true,
-          source: "auto",
-        },
-      },
-    },
-  };
 
-  useEffect(() => {
-    const fetchChartData = async () => {
-      return fetch(
-        `https://api.coingecko.com/api/v3/coins/${data.id}/market_chart?vs_currency=${currency}&days=1`
-      )
-        .then((res) => res.json())
-        .then((res) => {
-          const price: number[] = [];
-          const label: string[] = [];
-          for (let i = 0; i < res.prices.length; i += 1) {
-            if (i % 3 === 0) {
-              price.push(res.prices[i][1]);
-              label.push(
-                new Date(res.prices[i][0]).toLocaleTimeString("de-DE", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })
-              );
-            }
-          }
-          return { prices: price, labels: label };
-        });
-    };
-
-    fetchChartData().then((res) => setChartData(res));
-  }, [data.id]);
-  return chartData ? (
+  return (
     <div className="flex justify-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
       {/* <Image */}
       {/*  src={close} */}
@@ -150,8 +40,11 @@ const DisplayCoin = ({ data }: { data: CoinData }) => {
         />
       </h2>
       <div className="flex flex-col">
+        <h3 className="text-center">Letzte 7 Tage</h3>
         <div className="w-full h-40">
-          <Line data={dataForChart} options={options} />
+          <Sparklines data={data.sparkline_in_7d.price} width={100} height={25}>
+            <SparklinesLine color="#3396FF" />
+          </Sparklines>
         </div>
         <span className="w-full text-center cursor-default">
           <p>Aktueller Preis:</p>
@@ -176,11 +69,11 @@ const DisplayCoin = ({ data }: { data: CoinData }) => {
         </button>
       </Link>
     </div>
-  ) : (
-    <div className="flex justify-center items-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
-      <h1>Lade Daten...</h1>
-    </div>
   );
+  //   <div className="flex justify-center items-center w-full rounded-lg p-6 shadow-xl bg-white flex-col relative ">
+  //     <h1>Lade Daten...</h1>
+  //   </div>
+  // );
 };
 
 export { DisplayCoin };
