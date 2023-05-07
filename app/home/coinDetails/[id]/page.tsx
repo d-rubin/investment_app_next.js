@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import back from "../../../../img/back.png";
 import { MarketData } from "../../../../interfaces";
 import { CoinChart } from "../../../../components/Chart";
@@ -40,6 +38,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
           "Content-Type": "application/json",
         },
       });
+      console.log(response.json());
       return response.json();
     };
 
@@ -74,9 +73,7 @@ const CoinDetails = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <div className="px-4 ">
-          {marketData && <CoinChart id={params.id} />}
-        </div>
+        <div className="px-4 ">{/* <CoinChart id={params.id} /> */}</div>
         <div className="flex justify-between items-center px-4">
           <p className="text-center">
             24h Low:
