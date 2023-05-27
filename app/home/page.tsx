@@ -1,32 +1,30 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { DisplayCoin } from "../../components/DisplayCoin";
-import { CoinData } from "../../interfaces";
+import React from "react";
+// import { Tabs } from "antd";
+// import type { TabsProps } from "antd";
 
 const HomePage = () => {
-  const [coinList, setCoinList] = useState<CoinData[]>();
-  const currency = "eur";
-  const count = 10;
-  const locale = "de";
+  // const currency = "eur";
+  // const count = 100;
+  // const locale = "de";
+  // const coinList = await fetch(
+  //   `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${count}&page=1&sparkline=true&price_change_percentage=24h&locale=${locale}`
+  // ).then(async (res) => res.json());
 
-  useEffect(() => {
-    try {
-      fetch(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=${count}&page=1&sparkline=true&price_change_percentage=24h&locale=${locale}`
-      ).then(async (res) => {
-        const json = await res.json();
-        setCoinList(json);
-      });
-    } catch (e) {
-      console.error("Das waren zu viele Anfragen ", e);
-    }
-  }, []);
+  // const items: TabsProps["items"] = [
+  //   {
+  //     key: "chart",
+  //     label: `7 Tage Chart`,
+  //     children: `Content of Tab Pane 1`,
+  //   },
+  //   {
+  //     key: "data",
+  //     label: "Daten",
+  //     children: `Content of Tab Pane 2`,
+  //   },
+  // ];
 
-  return (
-    coinList &&
-    coinList.map((coin) => <DisplayCoin data={coin} key={coin.id} />)
-  );
+  // return <Tabs defaultActiveKey="chart" items={items} />;
+  return <h1>Hallo</h1>;
 };
 
 export default HomePage;
