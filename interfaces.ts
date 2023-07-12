@@ -103,23 +103,23 @@ export interface MarketData {
   liquidity_score: number;
   public_interest_score: number;
   market_data: {
-    current_price: currencies;
+    current_price: Currencies;
     total_value_locked: null;
     mcap_to_tvl_ratio: null;
     fdv_to_tvl_ratio: null;
     roi: null;
-    ath: currencies;
-    ath_change_percentage: currencies;
-    ath_date: currencies;
-    atl: currencies;
-    atl_change_percentage: currencies;
-    atl_date: currencies;
-    market_cap: currencies;
+    ath: Currencies;
+    ath_change_percentage: Currencies;
+    ath_date: Currencies;
+    atl: Currencies;
+    atl_change_percentage: Currencies;
+    atl_date: Currencies;
+    market_cap: Currencies;
     market_cap_rank: number;
-    fully_diluted_valuation: currencies;
-    total_volume: currencies;
-    high_24h: currencies;
-    low_24h: currencies;
+    fully_diluted_valuation: Currencies;
+    total_volume: Currencies;
+    high_24h: Currencies;
+    low_24h: Currencies;
     price_change_24h: number;
     price_change_percentage_24h: number;
     price_change_percentage_7d: number;
@@ -130,17 +130,17 @@ export interface MarketData {
     price_change_percentage_1y: number;
     market_cap_change_24h: number;
     market_cap_change_percentage_24h: number;
-    price_change_24h_in_currency: currencies;
-    price_change_percentage_1h_in_currency: currencies;
-    price_change_percentage_24h_in_currency: currencies;
-    price_change_percentage_7d_in_currency: currencies;
-    price_change_percentage_14d_in_currency: currencies;
-    price_change_percentage_30d_in_currency: currencies;
-    price_change_percentage_60d_in_currency: currencies;
-    price_change_percentage_200d_in_currency: currencies;
-    price_change_percentage_1y_in_currency: currencies;
-    market_cap_change_24h_in_currency: currencies;
-    market_cap_change_percentage_24h_in_currency: currencies;
+    price_change_24h_in_currency: Currencies;
+    price_change_percentage_1h_in_currency: Currencies;
+    price_change_percentage_24h_in_currency: Currencies;
+    price_change_percentage_7d_in_currency: Currencies;
+    price_change_percentage_14d_in_currency: Currencies;
+    price_change_percentage_30d_in_currency: Currencies;
+    price_change_percentage_60d_in_currency: Currencies;
+    price_change_percentage_200d_in_currency: Currencies;
+    price_change_percentage_1y_in_currency: Currencies;
+    market_cap_change_24h_in_currency: Currencies;
+    market_cap_change_percentage_24h_in_currency: Currencies;
     total_supply: number;
     max_supply: number;
     circulating_supply: number;
@@ -154,7 +154,7 @@ export interface MarketData {
   last_updated: string;
 }
 
-interface currencies {
+interface Currencies {
   aed: number;
   ars: number;
   aud: number;
