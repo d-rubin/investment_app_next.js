@@ -28,10 +28,12 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
+    "uuid": "^9.0.0",
     "wagmi": "^0.12.12"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.2.4",
+    "@types/uuid": "^9.0.2",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.37.0",
     "eslint-config-airbnb": "^19.0.4",

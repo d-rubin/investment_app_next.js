@@ -8,8 +8,6 @@ export default function RootPage() {
         Overview
       </h1>
       <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 w-full h-fit justify-items-center">
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
         <CoinList />
       </section>
     </main>
