@@ -14,7 +14,6 @@ export default function CoinList() {
 
   useEffect(() => {
     getCoinList().then((res) => {
-      console.log(res);
       setCoinList(res);
     });
   }, []);
