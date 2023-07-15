@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="px-4">{children}</body>
+      <body className="relative px-4 max-w-screen-xl mx-auto">{children}</body>
     </html>
   );
 }
