@@ -12,6 +12,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --color-negative: #db8d3f;
+  --color-positive: #61c0b0;
 }
 
 * {
@@ -25,7 +27,8 @@ body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  background-color: lightgray;
+  background-color: black;
+  color: lightgray;
 }
 
 a {
@@ -45,6 +48,14 @@ a {
 
 .carousel {
   animation: 80s linear 2s infinite normal none running carousel;
+}
+
+.color-positive path {
+  fill: var(--color-positive);
+}
+
+.color-negative path {
+  fill: var(--color-negative);
 }
 
 @keyframes carousel {
