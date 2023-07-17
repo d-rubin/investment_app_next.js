@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="relative px-4 max-w-screen-xl mx-auto">{children}</body>
+      <body className="scrollbar-none">{children}</body>
     </html>
   );
 }
