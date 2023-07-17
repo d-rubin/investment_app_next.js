@@ -24,7 +24,7 @@ export default function CoinList() {
     const sparklinestyle = {
       position: "absolute",
       left: "0",
-      top: "30%",
+      top: "27%",
       width: "100%",
       height: "35%",
       fill: positive ? "#61c0b0" : "#db8d3f",
@@ -33,7 +33,7 @@ export default function CoinList() {
     return (
       <article
         key={uuidv4()}
-        className="w-full h-40 bg-gray-800 rounded-2xl p-2 flex flex-col justify-between relative"
+        className="w-full h-44 bg-gray-800 rounded-2xl p-2 flex flex-col justify-between relative"
       >
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
