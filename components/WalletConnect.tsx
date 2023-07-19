@@ -26,8 +26,13 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains);
 const WalletConnect = () => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <div>
-        <Web3Button icon="show" label="Connect Wallet" balance="show" />
+      <div className="">
+        <Web3Button
+          icon="show"
+          avatar="hide"
+          label="Connect Wallet"
+          balance="show"
+        />
         <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
       </div>
     </WagmiConfig>
