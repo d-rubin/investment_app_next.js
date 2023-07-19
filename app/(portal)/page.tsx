@@ -1,4 +1,5 @@
 import React from "react";
+import WalletConnect from "@/components/WalletConnect";
 import Coin from "../../components/Coin";
 import { getCoinList } from "../../helper";
 
