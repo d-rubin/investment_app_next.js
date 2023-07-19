@@ -6,14 +6,12 @@ export const metadata = {
   description: "All your crypto apps at one place",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="scrollbar-none">{children}</body>
+      <body className="scrollbar-none">
+        <div className="px-4 max-w-screen-lg m-auto">{children}</div>
+      </body>
     </html>
   );
 }
