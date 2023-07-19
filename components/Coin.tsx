@@ -21,10 +21,7 @@ export default function Coin({ coin }: { coin: CoinData }) {
   };
 
   return (
-    <article
-      key={uuidv4()}
-      className="w-full h-40 bg-gray-800 rounded-2xl p-2 flex flex-col justify-between relative"
-    >
+    <article key={uuidv4()} className="w-full h-40 bg-gray-800 rounded-2xl p-2 flex flex-col justify-between relative">
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore */}
       <Sparklines style={sparklinestyle} data={coin.sparkline_in_7d.price}>
@@ -46,21 +43,14 @@ export default function Coin({ coin }: { coin: CoinData }) {
             positive ? "text-[--color-positive]" : "text-[--color-negative]"
           }`}
         >
-          <Image
-            src={positive ? upImage : downImage}
-            alt={positive ? "positive" : "negative"}
-            width={24}
-            height={24}
-          />
+          <Image src={positive ? upImage : downImage} alt={positive ? "positive" : "negative"} width={24} height={24} />
           <p className="font-semibold text-xs">
             {new Intl.NumberFormat("de-DE", {
               style: "currency",
               currency: "EUR",
             }).format(coin.price_change_24h)}
           </p>
-          <p className="text-xs">
-            ({coin.price_change_percentage_7d_in_currency.toFixed(2)} %)
-          </p>
+          <p className="text-xs">({coin.price_change_percentage_7d_in_currency.toFixed(2)} %)</p>
         </span>
       </div>
     </article>

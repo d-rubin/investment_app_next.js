@@ -2,11 +2,7 @@
 
 import React from "react";
 import "../styles/globals.css";
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from "@web3modal/ethereum";
+import { EthereumClient, w3mConnectors, w3mProvider } from "@web3modal/ethereum";
 import { Web3Button, Web3Modal } from "@web3modal/react";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { arbitrum, mainnet, polygon, optimism } from "wagmi/chains";
@@ -27,12 +23,7 @@ const WalletConnect = () => {
   return (
     <WagmiConfig config={wagmiConfig}>
       <div className="">
-        <Web3Button
-          icon="show"
-          avatar="hide"
-          label="Connect Wallet"
-          balance="show"
-        />
+        <Web3Button icon="show" avatar="hide" label="Connect Wallet" balance="show" />
         <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
       </div>
     </WagmiConfig>
