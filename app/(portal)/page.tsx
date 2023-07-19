@@ -12,9 +12,10 @@ export default async function RootPage() {
         <WalletConnect />
       </div>
       <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 w-full h-fit justify-items-center">
-        {coinList.map((coin) => {
-          return <Coin coin={coin} />;
-        })}
+        {coinList &&
+          coinList.map((coin) => {
+            return <Coin key={coin.id} coin={coin} />;
+          })}
       </section>
     </main>
   );
