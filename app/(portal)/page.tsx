@@ -1,10 +1,10 @@
 import React from "react";
-import { getCoinList } from "@/helper";
 import WalletConnect from "@/components/WalletConnect";
-import Coin from "../../components/Coin";
+import { getCoinList } from "@/helper";
+import Coin from "@/components/Coin";
 
 export default async function RootPage() {
-  // const coinList = await getCoinList();
+  const coinList = await getCoinList();
 
   return (
     <main className="relative w-full h-full pt-24 px-4 max-w-screen-lg mx-auto">
@@ -13,9 +13,9 @@ export default async function RootPage() {
       </div>
       <WalletConnect />
       <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 w-full h-fit justify-items-center">
-        {/* {coinList?.map((coin) => { */}
-        {/*  return <Coin key={coin.id} coin={coin} />; */}
-        {/* })} */}
+        {coinList?.map((coin) => {
+          return <Coin key={coin.id} coin={coin} />;
+        })}
       </section>
     </main>
   );
