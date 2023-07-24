@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuid } from "uuid";
 
 export default function LoadingRootPage() {
   return (
@@ -7,10 +8,10 @@ export default function LoadingRootPage() {
         Overview
       </h1>
       <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 w-full h-fit justify-items-center">
-        {Array.from({ length: 50 }).map((_) => {
+        {Array.from({ length: 50 }).map(() => {
           return (
             <article
-              key={`${_}-loadingCard`}
+              key={uuid()}
               className="animate-pulse bg-gray-200 w-full h-40 rounded-2xl p-2 flex flex-col justify-between relative"
             />
           );
