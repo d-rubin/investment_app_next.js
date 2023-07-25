@@ -4,6 +4,7 @@ import { SignClient } from "@walletconnect/sign-client";
 import { useEffect, useState } from "react";
 import { SignClient as SignClientType } from "@walletconnect/sign-client/dist/types/client";
 import { Web3Modal } from "@web3modal/standalone";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { SessionTypes } from "@walletconnect/types";
 
 const projectId = process.env.PROJECT_ID!;
@@ -18,6 +19,49 @@ const CustomConnectButton = () => {
   const [signClient, setSignClient] = useState<SignClientType>();
   const [sessions, setSessions] = useState<SessionTypes.Struct>();
   const [accounts, setAccounts] = useState<string>();
+  const [transactionHash, setTransactionHash] = useState();
+
+  const reset = () => {
+    setAccounts(undefined);
+    setSessions(undefined);
+  };
+
+  const subscribeToEvents = async (client: SignClientType) => {
+    if (!client) throw Error("No events to subscribe to b/c the client does not exist");
+    try {
+      client.on("session_delete", () => {
+        console.log("usr disconnected the session from the wallet");
+        reset();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSend = async () => {
+    try {
+      const transaction = {
+        from: accounts,
+        to: "",
+        data: "0x",
+        gasPrice: "0x029104e28c",
+        gasLimit: "0x5208",
+        value: "0x00",
+      };
+      const result = await signClient?.request({
+        topic: sessions!.topic,
+        request: {
+          method: "eth_sendTransaction",
+          params: [transaction],
+        },
+        chainId: "eip155:1",
+      });
+      // @ts-ignore
+      setTransactionHash(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const createClient = async () => {
     try {
@@ -26,6 +70,7 @@ const CustomConnectButton = () => {
       });
       // @ts-ignore
       setSignClient(client);
+      await subscribeToEvents(client);
     } catch (error) {
       console.log(error);
     }
@@ -40,7 +85,6 @@ const CustomConnectButton = () => {
       console.log(e);
     }
   };
-
   const handleConnect = async () => {
     if (!signClient) throw new Error("Cannot connect. Sign Client is not created");
     try {
@@ -67,12 +111,6 @@ const CustomConnectButton = () => {
     }
   };
 
-  // todo: dosnt't work like in video
-  const reset = () => {
-    setAccounts(undefined);
-    setSessions(undefined);
-  };
-
   const handleDisconnect = async () => {
     try {
       await signClient?.disconnect({
@@ -95,6 +133,12 @@ const CustomConnectButton = () => {
     <>
       <p>{accounts}</p>
       <button onClick={handleDisconnect}>Disconnect</button>
+      <button onClick={handleSend}>Send Transaction</button>
+      {transactionHash && (
+        <p>
+          View your transaction <a href="/register">here</a>
+        </p>
+      )}
     </>
   ) : (
     <button onClick={handleConnect} disabled={!signClient}>
