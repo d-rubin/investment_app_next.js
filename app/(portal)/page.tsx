@@ -13,7 +13,7 @@ export default async function RootPage() {
       </div>
       <WalletConnect />
       {/* <CustomConnectButton /> */}
-      <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4 w-full h-fit justify-items-center">
+      <section className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 w-full h-fit justify-items-center">
         {coinList?.map((coin) => {
           return <Coin key={coin.id} coin={coin} />;
         })}
