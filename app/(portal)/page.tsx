@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import WalletConnect from "@/components/WalletConnect";
 import { getCoinList } from "@/helper";
 import Coin from "@/components/Coin";
@@ -9,9 +9,12 @@ import { v4 as uuid } from "uuid";
 
 export default function RootPage() {
   const [coinList, setCoinList] = useState<CoinData[] | undefined>();
-  getCoinList().then((res) => {
-    setCoinList(res);
-  });
+
+  useEffect(() => {
+    getCoinList().then((res) => {
+      setCoinList(res);
+    });
+  }, []);
 
   const loadingItems = (
     <main className="w-full h-full pt-24">
