@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import WalletConnect from "@/components/WalletConnect";
 import { getCoinList } from "@/helper";
 import Coin from "@/components/Coin";
